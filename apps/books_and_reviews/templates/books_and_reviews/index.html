@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>Books Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/books_and_reviews/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <h1 class="navbar-brand">Welcome, {{ user.first_name }}!</h1>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a style = "margin-left: 900px" class = 'nav-link' href="/books/add">Add Book and Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style = "margin-left: 100px" class = 'nav-link' href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class = 'book_section'>
+            <h3>Recent Book Reviews: </h3>
+            {% for review in reviews %}
+                <a href = '/books/{{ review.book.id }}'>{{ review.book.title }}</a>
+                <div style = 'margin-left: 30px'>
+                    <p>Rating: </p>
+                    {% for star in review.rating %}
+                        {% if star == 1 %}
+                            <img src = "{% static '/books_and_reviews/images/gold_star.png' %}" alt='Gold Star' height='40'>
+                        {% else %}
+                            <img src = "{% static '/books_and_reviews/images/outline_star.png' %}" alt='Empty Star' height='40'>
+                        {% endif %}
+                    {% endfor %}
+                    <p></p>
+                    <a style = 'font-style: italic' href = '/users/{{ user.id }}'>{{ review.created_by.first_name }}</a>
+                    <p style = 'font-style: italic; display: inline-block'> says: {{ review.content }}</p>
+                    <p>Posted on: {{ review.created_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class = 'book_section'>
+            <h3>Other Books with Reviews: </h3>
+            <div class = 'all_books'>
+                {% for book in books %}
+                    <a href = '/books/{{ book.id }}' style = "display: block">{{ book.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>

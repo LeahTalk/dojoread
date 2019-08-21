@@ -1,0 +1,70 @@
+<html>
+<head>
+    <title>Add Book and Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/books_and_reviews/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <h1 class="navbar-brand">Welcome, {{ user.first_name }}!</h1>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a style = "margin-left: 1000px" class = 'nav-link' href="/books">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style = "margin-left: 100px" class = 'nav-link' href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div style = "margin: 50px">
+            <h3>{{ book.title }}</h3>
+            <p>Written by: {{ book.written_by.name }}</p>
+        </div>
+        <div class = "book_reviews">
+            <h3>Reviews:</h3>
+            {% for review in reviews %}
+            <div class = 'review_section'>
+                <p>Rating: </p>
+                {% for star in review.rating %}
+                    {% if star == 1 %}
+                        <img src = "{% static '/books_and_reviews/images/gold_star.png' %}" alt='Gold Star' height='40'>
+                    {% else %}
+                        <img src = "{% static '/books_and_reviews/images/outline_star.png' %}" alt='Empty Star' height='40'>
+                    {% endif %}
+                {% endfor %}
+                <p></p>
+                <a style = 'font-style: italic' href = '/users/{{ user.id }}'>{{ review.created_by.first_name }}</a>
+                <p style = 'font-style: italic; display: inline-block'> says: {{ review.content }}</p>
+                <p>Posted on: {{ review.created_at }}</p>
+                {% if review.created_by == user %}
+                    <a href = /books/delete/{{ review.id }}>Delete this Review</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class = 'add_review'>
+            <h3>Add a Review</h3>
+            <form action = '/books/add_book_and_review' method = 'post'>
+                {% csrf_token %}
+                <input type = 'hidden' name = 'book_id' value = {{ book.id }}>
+                <label for="review">Review</label>
+                <textarea class="form-control" id="review" name = "review" rows="5"></textarea>
+                <label for="rating">Rating:</label>
+                <select class="form-control" name = 'rating' id = 'rating'>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <button class="btn btn-primary" type="submit" style = "margin: 20px auto">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</body>

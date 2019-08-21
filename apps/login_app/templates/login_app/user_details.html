@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>User Reviews</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/books_and_reviews/css/style.css' %}">
+    <script type="text/javascript" src="{% static '/books_and_reviews/js/books.js' %}"></script>
+</head>
+<body>
+    <div class = "wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <h1 class="navbar-brand">Welcome, {{ user.first_name }}!</h1>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a style = "margin-left: 750px" class = 'nav-link' href="/books">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style = "margin-left: 100px" class = 'nav-link' href="/books/add">Add Book and Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style = "margin-left: 100px" class = 'nav-link' href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div style = 'padding: 50px'>
+            <h3>User alias: {{user.first_name}}</h3>
+            <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Total Reviews: {{ numReviews }}</p>
+            <h3 style = 'padding-top: 50px'>Posted reviews on the following books:</h3>
+            <div style = 'padding-left: 50px'>
+                {% for book in books %}
+                    <a href = '/books/{{ book.id }}' style = "display: block">{{ book.title }}</a>
+                {% endfor %}
+            </div> 
+        </div>
+    </div>
+</body>

@@ -1,0 +1,42 @@
+.book_section {
+    padding: 50px;
+    display: inline-block;
+    vertical-align: top;
+    width: 700px
+}
+
+.description_section {
+    display: inline-block;
+}
+
+.main_content {
+    margin-left: 50px;
+}
+
+.all_books {
+    margin-left: 50px;
+    padding: 10px;
+    height: 200px;
+    width: 400px;
+    border: 1px solid black;
+    overflow:auto;
+}
+
+.review_section {
+    border-top: 1px solid black;
+    padding: 0px 20px;
+}
+
+.book_reviews {
+    width: 600px;
+    margin-left: 50px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.add_review {
+    vertical-align: top;
+    display: inline-block;
+    margin-left: 100px;
+    width: 500px;
+}

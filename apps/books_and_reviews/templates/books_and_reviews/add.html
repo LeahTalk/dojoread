@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Add Book and Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/books_and_reviews/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <h1 class="navbar-brand">Welcome, {{ user.first_name }}!</h1>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a style = "margin-left: 1000px" class = 'nav-link' href="/books">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style = "margin-left: 100px" class = 'nav-link' href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div style = 'padding: 50px'>
+            {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <h3>Add a New Book Title and a Review</h3>
+            <form action = '/books/add_book_and_review' method = 'post'>
+                {% csrf_token %}
+                <div style = 'padding-left: 50px; padding-top: 20px; width: 600px'>
+                    <label for="title">Title</label>
+                    <input class="form-control" type="text" placeholder="Title" id = "title" name = "title">
+                    <label>Author:</label>
+                    <div style = "padding-left: 50px">
+                        <label for="selected_author">Choose from the list:</label>
+                        <select class="form-control" name = 'selected_author' id = 'selected_author'>
+                            {% for author in authors %}
+                                <option value = {{ author.id }}>{{ author.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="new_author">Or add a new author:</label>
+                        <input class="form-control inline_input" type="text" placeholder="Author" id = "new_author" name = "new_author">
+                    </div>
+                    <label for="review">Review</label>
+                    <textarea class="form-control" id="review" name = "review" rows="5"></textarea>
+                    <label for="rating">Rating:</label>
+                    <select class="form-control" id="rating" name = 'rating' id = 'rating'>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit" style = "margin: 20px auto">Add Book and Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
